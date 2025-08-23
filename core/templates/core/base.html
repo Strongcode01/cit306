@@ -1,0 +1,125 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> {% block title %}CIT 306 GP 14{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'css/footer.css' %}">
+  <link rel="stylesheet" href="{% static 'css/header.css' %}">
+  
+  {% block head %}{% endblock %}
+  {% block extra_css %}{% endblock %}
+</head>
+<body>
+  <header class="site-header">
+  <div class="container">
+    <div class="logo">CIT 306 GP 14</div>
+
+    <!-- Hamburger button -->
+    <button class="nav-toggle" aria-controls="mobile-menu" aria-expanded="false">
+      ☰
+    </button>
+
+    <!-- Collapsible mobile menu -->
+    <div id="mobile-menu" class="nav-menu">
+      <ul class="menu">
+        <li><a href="{% url 'core:home' %}">Home</a></li>
+        <li class="dropdown">
+          <button class="dropdown-toggle">Core Important</button>
+          <ul class="submenu">
+            <li><a href="{% url 'board:announcements' %}">Announcements</a></li>
+            <li><a href="{% url 'board:events' %}">Events</a></li>
+            <li><a href="{% url 'board:timetable' %}">Timetable</a></li>
+            <li><a href="{% url 'board:results' %}">Results</a></li>
+          </ul>
+        </li>
+        <li><a href="{% url 'team:credentials' %}">Group Credentials</a></li>
+        <li><a href="{% url 'core:about' %}">About</a></li>
+        <li><a href="{% url 'core:contact' %}">Contact</a></li>
+      </ul>
+
+      <!-- Auth links inside menu too -->
+      <div class="auth-links">
+        {% if user.is_authenticated %}
+          <a href="{% url 'accounts:profile' %}" style="font-size: 18px; text-decoration: none;">👤</a>
+          <a href="{% url 'accounts:logout' %}" style="font-size: 18px; text-decoration: none;">🔒</a>
+        {% else %}
+          <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: black; font-size: 18px;">Login</a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header>
+
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+    <footer class="site-footer" role="contentinfo">
+    <div class="container" >
+      <div class="footer-grid" aria-label="Footer links">
+        <!-- Column 1: About -->
+        <div class="footer-col footer-about">
+          <h4 class="footer-title">About</h4>
+          <p>Departmental Student Information Board - CIT 306 GROUP 14.  
+             A simple noticeboard for announcements, events, timetables and results.</p>
+        </div>
+
+        <!-- Column 2: Quick links -->
+        <div class="footer-col footer-links">
+          <h4 class="footer-title">Quick links</h4>
+          <ul>
+            <li><a href="{% url 'core:home' %}">Home</a></li>
+            <li><a href="{% url 'board:announcements' %}">Announcements</a></li>
+            <li><a href="{% url 'board:events' %}">Events</a></li>
+            <li><a href="{% url 'board:timetable' %}">Timetable</a></li>
+            <li><a href="{% url 'board:results' %}">Results</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Resources -->
+        <div class="footer-col footer-resources">
+          <h4 class="footer-title">Resources</h4>
+          <ul>
+            <li><a href="{% url 'board:archive' %}">Archive</a></li>
+            <li><a href="{% url 'board:search' %}">Search</a></li>
+            <li><a href="{% url 'core:about' %}">About Dept.</a></li>
+            <li><a href="{% url 'core:contact' %}">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Contact -->
+        <div class="footer-col footer-contact">
+          <h4 class="footer-title">Contact</h4>
+          <address>
+            <p>Departmental Student Information Board</p>
+            <p><a href="mailto:cit306group14@gmail.com">cit306group14@gmail.com</a></p>
+            <p>Project: CIT 306 GROUP 14 Web Development</p>
+          </address>
+        </div>
+      </div>
+
+      <!-- Bottom row -->
+      <div class="footer-bottom">
+        <p>Departmental Student Information Board CIT 306 GROUP 14</p>
+        <p style="padding: 1rem;">Group Contact Email: <a href="mailto:cit306group14@gmail.com">cit306group14@gmail.com</a></p>
+      </div>
+    </div>
+  </footer>
+  <script>
+  const toggleBtn = document.querySelector('.nav-toggle');
+  const navMenu = document.querySelector('#mobile-menu');
+
+  toggleBtn.addEventListener('click', () => {
+    const expanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+    toggleBtn.setAttribute('aria-expanded', !expanded);
+    navMenu.classList.toggle('active');
+  });
+</script>
+
+
+</body>
+</html>

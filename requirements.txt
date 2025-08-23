@@ -1,0 +1,12 @@
+Django
+psycopg2-binary
+gunicorn
+python-dotenv
+django.urls
+dj_database_url
+pillow
+
+# To generate a secret key
+# in python shell
+# >>> from django.core.management.utils import get_random_secret_key
+# >>> print(get_random_secret_key())

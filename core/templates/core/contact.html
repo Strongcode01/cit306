@@ -1,0 +1,104 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block title %}Contact{% endblock %}
+
+{% block extra_css %}
+<style>
+/* Contact section container */
+.contact-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+  background: #f5f7fa;
+}
+
+/* Contact form card */
+.contact-form {
+  background: #fff;
+  padding: 2rem 2.5rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  max-width: 500px;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+}
+
+/* Title */
+.contact-form h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  color: #1f0030;
+}
+
+/* Labels */
+.contact-form label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Inputs + Textarea */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #5a28cc;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(90,40,204,0.15);
+}
+
+/* Submit button */
+.contact-form .btn {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  background: #5a28cc;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.contact-form .btn:hover {
+  background: #432099;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="background-color: blanchedalmond; padding: 1rem; width: 100%;">
+  <CENTER style="background-color: beige; color: rgb(30, 0, 68); border-radius: 1rem; border: 1px solid red;">
+    <h1>FEDERAL UNIVERSITY OF TECHNOLOGIES OWERRI</h1>
+    <H2>DEPARMENT OF COMPUTER SCIENCE STUDENTS</H2>
+    <H4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</H4>
+  </CENTER>
+
+</div>
+<div class="contact-section">
+  <form method="post" class="contact-form">
+    {% csrf_token %}
+    <h2>Contact Us</h2>
+    <label>Name</label>
+    <input type="text" name="name" required>
+    <label>Email</label>
+    <input type="email" name="email" required>
+    <label>Message</label>
+    <textarea name="message" rows="6" required></textarea>
+    <button type="submit" class="btn">Send Message</button>
+  </form>
+</div>
+{% endblock %}

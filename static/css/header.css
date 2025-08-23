@@ -1,0 +1,79 @@
+/* ===== Main navigation & dropdown ===== */
+.main-nav { position: relative; }
+.menu { list-style: none; margin: 0; padding: 0; display:flex; gap:12px; align-items:center; }
+.menu-item { position: relative; }
+.menu a, .menu button { text-decoration: none; color: #222; background: transparent; border: none; cursor: pointer; font: inherit; padding: 6px 8px; }
+.menu button:focus, .menu a:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Dropdown (desktop) */
+.dropdown .submenu {
+  position: absolute;
+  left: 0;
+  top: calc(100% + 6px);
+  min-width: 200px;
+  background: #868686;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+  padding: 0.5rem 0;
+  display: none;
+  z-index: 80;
+}
+.dropdown{
+    position: relative;
+}
+.dropdown .submenu li { 
+    padding: 0; 
+    list-style: none;
+    
+}
+.dropdown .submenu a {
+  display: block;
+  padding: 10px 14px;
+  color: #111;
+  white-space: nowrap;
+
+}
+.dropdown .submenu a:hover, .dropdown .submenu a:focus {
+  background: #f7f7fb;
+}
+
+/* show submenu on hover/focus within (desktop) */
+.dropdown:hover > .submenu,
+.dropdown:focus-within > .submenu {
+  display: block;
+}
+
+/* small caret spacing */
+.dropdown-toggle { display:inline-flex; align-items:center; gap:.4rem; }
+
+/* Mobile styles: starts with menu hidden and toggled open by JS */
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 6px 8px;
+}
+@media (max-width: 900px) {
+  .nav-toggle { display: inline-block; }
+  .menu { display: none; flex-direction: column; gap:0; background: #fff; position: absolute; right: 1rem; top:calc(100% + 8px); width: 240px; border:1px solid #eee; border-radius:8px; box-shadow:0 8px 24px rgba(16,24,40,0.06); overflow:hidden; z-index:90; }
+  .menu.open { display:flex; }
+  .menu-item { width: 100%; }
+  .menu a, .menu button { display:block; width:100%; text-align:left; padding:10px 12px; border-bottom: 1px solid #f2f2f2; }
+  .dropdown .submenu { position: static; border: none; box-shadow: none; padding: 0; display: none; }
+  .dropdown .submenu.open { display:block; }
+}
+
+/* small visual tweak when submenu open via JS */
+.menu-item .dropdown-toggle[aria-expanded="true"]::after {
+  content: " ▲";
+  font-size: 0.8rem;
+  margin-left: 6px;
+}
+.menu-item .dropdown-toggle[aria-expanded="false"]::after {
+  content: " ▼";
+  font-size: 0.8rem;
+  margin-left: 6px;
+}

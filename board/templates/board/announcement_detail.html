@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block title %}{{ announcement.title }}{% endblock %}
+{% block content %}
+<div style="background-color: blanchedalmond; padding: 1rem; width: 100%;">
+  <CENTER style="background-color: beige; color: rgb(30, 0, 68); border-radius: 1rem; border: 1px solid red;">
+    <h1>FEDERAL UNIVERSITY OF TECHNOLOGIES OWERRI</h1>
+    <H2>DEPARMENT OF COMPUTER SCIENCE STUDENTS</H2>
+    <H4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</H4>
+  </CENTER>
+
+</div>
+<article>
+  <h2>{{ announcement.title }}</h2>
+  <div class="meta">Published: {{ announcement.publish_date|date:'M d, Y H:i' }}</div>
+  <div class="content">{{ announcement.body|linebreaks }}</div>
+</article>
+{% endblock %}

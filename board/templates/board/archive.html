@@ -1,0 +1,20 @@
+{% extends 'core/base.html' %}
+{% block title %}Archive{% endblock %}
+{% block content %}
+<div style="background-color: blanchedalmond; padding: 1rem; width: 100%;">
+  <CENTER style="background-color: beige; color: rgb(30, 0, 68); border-radius: 1rem; border: 1px solid red;">
+    <h1>FEDERAL UNIVERSITY OF TECHNOLOGIES OWERRI</h1>
+    <H2>DEPARMENT OF COMPUTER SCIENCE STUDENTS</H2>
+    <H4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</H4>
+  </CENTER>
+
+</div>
+<h2>Archive</h2>
+<ul>
+  {% for i in items %}
+  <li>{{ i.title }} — {{ i.publish_date|date:'M d, Y' }}</li>
+  {% empty %}
+  <li>No archived items.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

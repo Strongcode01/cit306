@@ -1,0 +1,49 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Signup{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+{% endblock %}
+{% block content %}
+<div style="display:flex;justify-content:center;padding:2rem 0;">
+  <form class="signup" method="post" action="{% url 'accounts:signup' %}">
+    {% csrf_token %}
+    <span>SignUp</span>
+
+    <!-- Manual inputs bound to form field names -->
+    <input type="text" name="full_name" placeholder="Full name" value="{{ form.full_name.value|default_if_none:'' }}" required>
+    <input type="text" name="matric_number" placeholder="Matric number" value="{{ form.matric_number.value|default_if_none:'' }}" required>
+    <input type="text" name="department" placeholder="Department" value="{{ form.department.value|default_if_none:'' }}" required>
+    <input type="text" name="serial_number" placeholder="Serial number" value="{{ form.serial_number.value|default_if_none:'' }}" required>
+    <input type="email" name="email" placeholder="Email" value="{{ form.email.value|default_if_none:'' }}" required>
+    <input type="password" name="password1" placeholder="Password" required>
+    <input type="password" name="password2" placeholder="Confirm Password" required>
+
+    <div class="newsletter-section">
+      <input id="signup-newsletter" type="checkbox" name="newsletter" {% if form.newsletter.value %}checked{% endif %}>
+      <label for="signup-newsletter">Receive Weekly Emails</label>
+    </div>
+
+    <input type="hidden" name="username" value="{{ form.username.value|default_if_none:'' }}">
+
+    <button type="submit">SignUp</button>
+
+    {% if messages %}
+      <ul class="form-errors">
+        {% for m in messages %}
+          <li>{{ m }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if form.errors %}
+      <ul class="form-errors">
+        {% for field, errors in form.errors.items %}
+          {% for err in errors %}
+            <li>{{ field|capfirst }}: {{ err }}</li>
+          {% endfor %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </form>
+</div>
+{% endblock %}

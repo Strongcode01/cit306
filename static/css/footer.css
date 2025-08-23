@@ -1,0 +1,83 @@
+/* Footer — 4 column responsive layout */
+.site-footer {
+  background: #fff;
+  padding: 2rem 0;
+  border-top: 1px solid #eee;
+  color: #222;
+  font-size: 0.95rem;
+}
+
+.site-footer .container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Grid: 4 columns on desktop */
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+/* Column styling */
+.footer-col { line-height: 1.55; }
+.footer-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--primary);
+  color: #cf9bff;
+}
+
+/* Lists inside footer */
+.footer-col ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.footer-col ul li {
+  margin: 0.35rem 0;
+}
+.footer-col a {
+  color: #999797;
+  text-decoration: none;
+}
+.footer-col a:hover,
+.footer-col a:focus {
+  text-decoration: none;
+  outline: 1px;
+}
+
+/* Address */
+.footer-contact address {
+  font-style: normal;
+  margin: 0;
+}
+
+/* Bottom strip */
+.footer-bottom {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f2f2f2;
+  color: var(--muted);
+  font-size: 0.92rem;
+  text-align: center;
+}
+.footer-bottom a{
+  color: #f2f2f2;
+  text-decoration: none;
+  
+}
+
+/* Responsive breakpoints */
+@media (max-width: 900px) {
+  .footer-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 600px) {
+  .footer-grid { grid-template-columns: 1fr; }
+  .footer-bottom { text-align: center; }
+  .site-footer { padding: 1.25rem 0; }
+}

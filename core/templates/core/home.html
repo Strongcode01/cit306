@@ -1,0 +1,55 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block head %} 
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<style>
+  
+</style>
+{% endblock %}
+{% block content %}
+<section class="hero-section">
+  <div class="hero-image">
+    <img src="{% static 'images/hero1.jpeg' %}" alt="Department noticeboard illustration">
+  </div>
+  <div class="hero-text">
+    <h1>Departmental Student Information Board</h1>
+    <p>Welcome to the departmental noticeboard. Get announcements, events and timetables here.</p>
+    <a href="{% url 'team:credentials' %}"><button class="act-btn"
+    >Check Participants</button></a>
+  <a href="{% url 'accounts:signup' %}"><button class="act-btn"
+    >Group Members Signup</button></a>
+  </div>
+</section>
+
+<div style="background-color: blanchedalmond; padding: 1rem; width: 100%;">
+  <CENTER style="background-color: beige; color: rgb(30, 0, 68); border-radius: 1rem; border: 1px solid red;">
+    <h1>FEDERAL UNIVERSITY OF TECHNOLOGIES OWERRI</h1>
+    <H2>DEPARMENT OF COMPUTER SCIENCE STUDENTS</H2>
+    <H4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</H4>
+  </CENTER>
+
+</div>
+<section class="cards" style="align-self: center; justify-content: center;">
+  <div class="card">
+    <h3>Latest Announcements</h3>
+    <ul>
+      {% for a in announcements %}
+      <li><a href="{% url 'board:announcement_detail' a.pk %}">{{ a.title }}</a> — {{ a.publish_date|date:'M d, Y' }}</li>
+      {% empty %}
+      <li>No announcements yet.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Upcoming Events</h3>
+    <ul>
+      {% for e in events %}
+      <li><a href="{% url 'board:event_detail' e.pk %}">{{ e.title }}</a> — {{ e.start_datetime|date:'M d, Y H:i' }}</li>
+      {% empty %}
+      <li>No events scheduled.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endblock %}

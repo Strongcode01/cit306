@@ -1,0 +1,111 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock %}
+
+{% block extra_css %}
+<style>
+  .profile-container {
+    display: flex;
+    min-height: 80vh;
+    font-family: "Inter", sans-serif;
+    background: #f5f7fa;
+    padding: 2rem;
+  }
+
+  /* Sidebar */
+  .profile-sidebar {
+    width: 250px;
+    background: #1f0030;
+    color: white;
+    border-radius: 12px;
+    padding: 2rem 1rem;
+    margin-right: 2rem;
+  }
+  .profile-sidebar h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  .profile-sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  .profile-sidebar ul li {
+    margin: 12px 0;
+  }
+  .profile-sidebar ul li a {
+    color: #ddd;
+    text-decoration: none;
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+  .profile-sidebar ul li a:hover {
+    background: #432099;
+    color: #fff;
+  }
+
+  /* Main profile content */
+  .profile-main {
+    flex: 1;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    padding: 2rem;
+    text-align: center;
+  }
+
+  /* Avatar */
+  .profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #5a28cc;
+    margin-bottom: 1rem;
+  }
+
+  .profile-main h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.8rem;
+    color: #1f0030;
+  }
+  .profile-main p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+    color: #444;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+
+  <!-- Sidebar -->
+  <aside class="profile-sidebar">
+    <h3>Menu</h3>
+    <ul>
+      <li><a href="{% url 'core:home' %}">🏠 Home</a></li>
+      <li><a href="{% url 'accounts:profile' %}">👤 Profile</a></li>
+      <li><a href="{% url 'board:announcements' %}">📢 Announcements</a></li>
+      <li><a href="{% url 'board:events' %}">📅 Events</a></li>
+      <li><a href="{% url 'accounts:logout' %}">🚪 Logout</a></li>
+      <li><a href="{% url 'accounts:profile_update' %}">Edit Profile</a></li>
+    </ul>
+  </aside>
+
+  <!-- Main content -->
+  <div class="profile-main">
+    <!-- Avatar (default static image if you don’t yet store user pics) -->
+    <img src="{% static 'img/default-avatar.png' %}" alt="Avatar" class="profile-avatar">
+
+    <h2>{{ user.get_full_name|default:user.username }}</h2>
+    <p><strong>Matric:</strong> {{ user.username }}</p>
+    <p><strong>Department:</strong> {{ user.profile.department }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+  </div>
+
+</div>
+{% endblock %}

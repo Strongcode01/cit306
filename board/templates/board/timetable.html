@@ -1,0 +1,32 @@
+{% extends 'core/base.html' %}
+{% block title %}Timetable{% endblock %}
+{% block content %}
+<div style="background-color: blanchedalmond; padding: 1rem; width: 100%;">
+  <CENTER style="background-color: beige; color: rgb(30, 0, 68); border-radius: 1rem; border: 1px solid red;">
+    <h1>FEDERAL UNIVERSITY OF TECHNOLOGIES OWERRI</h1>
+    <H2>DEPARMENT OF COMPUTER SCIENCE STUDENTS</H2>
+    <H4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</H4>
+  </CENTER>
+
+</div>
+<h2>Timetable</h2>
+<table class="timetable">
+  <thead>
+    <tr><th>Course</th><th>Level</th><th>Semester</th><th>Day</th><th>Time</th><th>Venue</th></tr>
+  </thead>
+  <tbody>
+    {% for t in timetable %}
+    <tr>
+      <td>{{ t.course_code }}</td>
+      <td>{{ t.level }}</td>
+      <td>{{ t.semester }}</td>
+      <td>{{ t.day }}</td>
+      <td>{{ t.start_time }} - {{ t.end_time }}</td>
+      <td>{{ t.venue }}</td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="6">No timetable entries</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

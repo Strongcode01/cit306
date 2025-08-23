@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+{% block title %}Events{% endblock %}
+{% block content %}
+<div style="background-color: blanchedalmond; padding: 1rem; width: 100%;">
+  <CENTER style="background-color: beige; color: rgb(30, 0, 68); border-radius: 1rem; border: 1px solid red;">
+    <h1>FEDERAL UNIVERSITY OF TECHNOLOGIES OWERRI</h1>
+    <H2>DEPARMENT OF COMPUTER SCIENCE STUDENTS</H2>
+    <H4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</H4>
+  </CENTER>
+
+</div>
+<h2>Events</h2>
+<ul>
+  {% for e in events %}
+  <li>
+    <a href="{% url 'board:event_detail' e.pk %}">{{ e.title }}</a>
+    <div class="meta">{{ e.start_datetime|date:'M d, Y H:i' }} — {{ e.venue }}</div>
+  </li>
+  {% empty %}
+  <li>No events</li>
+  {% endfor %}
+</ul>
+{% endblock %}
