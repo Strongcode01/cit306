@@ -5,7 +5,7 @@ python-dotenv
 django.urls
 dj_database_url
 pillow
-
+whitenoise
 # To generate a secret key
 # in python shell
 # >>> from django.core.management.utils import get_random_secret_key
