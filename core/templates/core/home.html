@@ -4,7 +4,153 @@
 {% block head %} 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
-  
+  .header {
+    background-color: rgb(250, 212, 255);
+    padding: 1rem;
+    width: 100%;
+    margin-bottom: 1rem;
+    border-radius: 1rem;
+  }
+
+  .header-content {
+    background-color: beige;
+    color: rgb(30, 0, 68);
+    border-radius: 1rem;
+    border: 1px solid red;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .header-content h1 {
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+  }
+  .header-content h2 {
+    font-size: 1.2rem;
+    margin: 0.3rem 0;
+  }
+  .header-content h4 {
+    font-size: 1rem;
+    margin: 0.3rem 0;
+  }
+  .announcements-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Title */
+.announcements-title {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #1f0030; /* adjust to your theme */
+}
+
+/* Search form aligned right */
+.search-inline {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.search-inline input {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-width: 220px;
+  font-size: 0.95rem;
+}
+.search-inline button {
+  padding: 0.45rem 0.7rem;
+  border: none;
+  background: #1e613c; /* primary color */
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.search-inline button:hover { opacity: 0.95; }
+
+/* Grid for cards: two columns, responsive */
+.announcements-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* Card */
+.announcement-card {
+  background: #ffffff;
+  border: 1px solid #edf0f2;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(31,0,48,0.03);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.announcement-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(31,0,48,0.08);
+}
+
+/* Title link */
+.announcement-link { text-decoration: none; color: inherit; }
+.announcement-title {
+  margin: 0 0 0.15rem 0;
+  font-size: 1.05rem;
+  color: #111827;
+  line-height: 1.2;
+}
+
+/* Meta row (date + pinned) */
+.announcement-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.pinned-badge {
+  display: inline-block;
+  margin-left: 0.25rem;
+  background: #fff4e5;
+  color: #b45309;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid rgba(180,83,9,0.08);
+}
+
+/* Excerpt */
+.announcement-excerpt {
+  margin: 0.5rem 0 0 0;
+  color: #374151;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  flex: 1 1 auto;
+}
+
+/* Empty state */
+.no-announcements {
+  grid-column: 1 / -1;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* Mobile: single column */
+@media (max-width: 720px) {
+  .announcements-grid { grid-template-columns: 1fr; }
+  .search-inline input { min-width: 140px; }
+}
+
 </style>
 {% endblock %}
 {% block content %}
@@ -22,34 +168,65 @@
   </div>
 </section>
 
-<div style="background-color: blanchedalmond; padding: 1rem; width: 100%;">
-  <CENTER style="background-color: beige; color: rgb(30, 0, 68); border-radius: 1rem; border: 1px solid red;">
-    <h1>FEDERAL UNIVERSITY OF TECHNOLOGIES OWERRI</h1>
-    <H2>DEPARMENT OF COMPUTER SCIENCE STUDENTS</H2>
-    <H4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</H4>
-  </CENTER>
-
+<div class="header">
+  <div class="header-content">
+    <h1>FEDERAL UNIVERSITY OF TECHNOLOGY, OWERRI</h1>
+    <h2>DEPARTMENT OF COMPUTER SCIENCE STUDENTS</h2>
+    <h4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</h4>
+  </div>
 </div>
 <section class="cards" style="align-self: center; justify-content: center;">
+
+  <!-- Announcements -->
   <div class="card">
-    <h3>Latest Announcements</h3>
-    <ul>
+    <div class="announcements-header">
+      <h3 class="announcements-title">Latest Announcements</h3>
+      <form method="get" class="search-inline">
+        <input name="q" placeholder="Search announcements" value="{{ request.GET.q }}">
+        <button type="submit">Search</button>
+      </form>
+    </div>
+
+    <ul class="announcements-grid">
       {% for a in announcements %}
-      <li><a href="{% url 'board:announcement_detail' a.pk %}">{{ a.title }}</a> — {{ a.publish_date|date:'M d, Y' }}</li>
+      <li class="announcement-card">
+        <a href="{% url 'board:announcement_detail' a.pk %}" class="announcement-link">
+          <h4 class="announcement-title">{{ a.title }}</h4>
+        </a>
+        <div class="announcement-meta">
+          <span>{{ a.publish_date|date:'M d, Y' }}</span>
+          {% if a.is_pinned %}
+          <span class="pinned-badge">Pinned</span>
+          {% endif %}
+        </div>
+        <p class="announcement-excerpt">{{ a.body|truncatechars:180 }}</p>
+      </li>
       {% empty %}
-      <li>No announcements yet.</li>
+      <li class="no-announcements">No announcements yet.</li>
       {% endfor %}
     </ul>
   </div>
+
+  <!-- Events -->
   <div class="card">
-    <h3>Upcoming Events</h3>
-    <ul>
+    <h3 class="announcements-title">Upcoming Events</h3>
+    <ul class="announcements-grid">
       {% for e in events %}
-      <li><a href="{% url 'board:event_detail' e.pk %}">{{ e.title }}</a> — {{ e.start_datetime|date:'M d, Y H:i' }}</li>
+      <li class="announcement-card">
+        <a href="{% url 'board:event_detail' e.pk %}" class="announcement-link">
+          <h4 class="announcement-title">{{ e.title }}</h4>
+        </a>
+        <div class="announcement-meta">
+          <span>{{ e.start_datetime|date:'M d, Y H:i' }}</span>
+        </div>
+        <p class="announcement-excerpt">{{ e.description|truncatechars:150 }}</p>
+      </li>
       {% empty %}
-      <li>No events scheduled.</li>
+      <li class="no-announcements">No events scheduled.</li>
       {% endfor %}
     </ul>
   </div>
+
 </section>
+
 {% endblock %}

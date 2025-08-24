@@ -77,6 +77,44 @@
     font-size: 1rem;
     color: #444;
   }
+
+  /* Responsiveness */
+  @media (max-width: 992px) {
+    .profile-container {
+      flex-direction: column;
+      padding: 1.5rem;
+    }
+
+    .profile-sidebar {
+      width: 100%;
+      order: 2;
+      margin-right: 0;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      font-size: medium;
+    }
+
+    .profile-sidebar ul li a {
+      text-align: center;
+    }
+
+    .profile-main {
+      padding: 1.5rem;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .profile-main h2 {
+      font-size: 1.5rem;
+    }
+    .profile-main p {
+      font-size: 0.9rem;
+    }
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+    }
+  }
 </style>
 {% endblock %}
 
@@ -86,12 +124,15 @@
   <!-- Sidebar -->
   <aside class="profile-sidebar">
     <h3>Menu</h3>
+    <button class="nav-toggle" aria-controls="mobile-menu" aria-expanded="false">
+      ☰
+    </button>
     <ul>
-      <li><a href="{% url 'core:home' %}">🏠 Home</a></li>
-      <li><a href="{% url 'accounts:profile' %}">👤 Profile</a></li>
-      <li><a href="{% url 'board:announcements' %}">📢 Announcements</a></li>
-      <li><a href="{% url 'board:events' %}">📅 Events</a></li>
-      <li><a href="{% url 'accounts:logout' %}">🚪 Logout</a></li>
+      <li><a href="{% url 'core:home' %}">Home</a></li>
+      <li><a href="{% url 'accounts:profile' %}">Profile</a></li>
+      <li><a href="{% url 'board:announcements' %}">Announcements</a></li>
+      <li><a href="{% url 'board:events' %}">Events</a></li>
+      <li><a href="{% url 'accounts:logout' %}">Logout</a></li>
       <li><a href="{% url 'accounts:profile_update' %}">Edit Profile</a></li>
     </ul>
   </aside>
@@ -99,11 +140,11 @@
   <!-- Main content -->
   <div class="profile-main">
     <!-- Avatar (default static image if you don’t yet store user pics) -->
-    <img src="{% static 'img/default-avatar.png' %}" alt="Avatar" class="profile-avatar">
+    <img src="{% static 'images/default-avatar.png' %}" alt="Avatar" class="profile-avatar">
 
     <h2>{{ user.get_full_name|default:user.username }}</h2>
     <p><strong>Matric:</strong> {{ user.username }}</p>
-    <p><strong>Department:</strong> {{ user.profile.department }}</p>
+    <p><strong>Department:</strong> {{ user.Profile.department }}</p>
     <p><strong>Email:</strong> {{ user.email }}</p>
   </div>
 

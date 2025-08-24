@@ -8,11 +8,90 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet" href="{% static 'css/footer.css' %}">
   <link rel="stylesheet" href="{% static 'css/header.css' %}">
+  <link rel="stylesheet" href="{% static 'css/loader.css' %}">
   
   {% block head %}{% endblock %}
   {% block extra_css %}{% endblock %}
+  <style>
+    /* minimal overlay styles (won't interfere with your existing .loader5) */
+    #global-page-loader { 
+      display: none; 
+      position: fixed; 
+      inset: 0; 
+      z-index: 9999; 
+      align-items: center; 
+      justify-content: center; 
+      background: rgba(109, 109, 109, 0.39); }
+    #global-page-loader.show { 
+      display: flex; 
+      pointer-events: auto; }
+
+    
+    .loader5 {
+      position: relative;
+      width: 80px;
+      height: 80px;
+    }
+
+    .loader5 span {
+      position: absolute;
+      border: 3px solid #1e613c;
+      opacity: 1;
+      border-radius: 50%;
+      animation: loader5-animation 1.2s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+    }
+
+    .loader5 span:nth-child(2) {
+      animation-delay: -0.5s;
+    }
+
+    @keyframes loader5-animation {
+      0% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+
+      4.9% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 0;
+      }
+
+      5% {
+        top: 36px;
+        left: 36px;
+        width: 0;
+        height: 0;
+        opacity: 1;
+      }
+
+      100% {
+        top: 0px;
+        left: 0px;
+        width: 72px;
+        height: 72px;
+        opacity: 0;
+      }
+    }
+
+  </style>
+  
+  
+  
 </head>
 <body>
+  <!-- Spinner overlay (hidden by default). Place in base.html -->
+  <div id="global-page-loader" aria-hidden="true">
+    <div class="loader5" role="status" aria-label="Loading">
+      <span></span><span></span>
+    </div>
+  </div>
+
   <header class="site-header">
   <div class="container">
     <div class="logo">CIT 306 GP 14</div>
@@ -35,20 +114,20 @@
             <li><a href="{% url 'board:results' %}">Results</a></li>
           </ul>
         </li>
-        <li><a href="{% url 'team:credentials' %}">Group Credentials</a></li>
+        <li><a href="{% url 'team:credentials' %}">Group Members</a></li>
         <li><a href="{% url 'core:about' %}">About</a></li>
         <li><a href="{% url 'core:contact' %}">Contact</a></li>
+        <div class="auth-links">
+          {% if user.is_authenticated %}
+            <a href="{% url 'accounts:profile' %}" style="font-size: 18px; text-decoration: none;">👤</a>
+            <a href="{% url 'accounts:logout' %}" style="font-size: 18px; text-decoration: none;">🔒</a>
+          {% else %}
+            <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: black; font-size: 18px;">Login</a>
+          {% endif %}
+        </div>
       </ul>
 
-      <!-- Auth links inside menu too -->
-      <div class="auth-links">
-        {% if user.is_authenticated %}
-          <a href="{% url 'accounts:profile' %}" style="font-size: 18px; text-decoration: none;">👤</a>
-          <a href="{% url 'accounts:logout' %}" style="font-size: 18px; text-decoration: none;">🔒</a>
-        {% else %}
-          <a href="{% url 'accounts:login' %}" style="text-decoration: none; color: black; font-size: 18px;">Login</a>
-        {% endif %}
-      </div>
+      
     </div>
   </div>
 </header>
@@ -109,6 +188,7 @@
       </div>
     </div>
   </footer>
+  <!-- <script src="{% static 'js/loader.js' %}"></script> -->
   <script>
   const toggleBtn = document.querySelector('.nav-toggle');
   const navMenu = document.querySelector('#mobile-menu');
@@ -118,8 +198,114 @@
     toggleBtn.setAttribute('aria-expanded', !expanded);
     navMenu.classList.toggle('active');
   });
+
+  // the loader scripts
+  
+(function () {
+    const loader = document.getElementById('global-page-loader');
+    function showLoader() {
+      if (!loader) return;
+      loader.classList.add('show');
+      loader.setAttribute('aria-hidden', 'false');
+    }
+    function hideLoader() {
+      if (!loader) return;
+      loader.classList.remove('show');
+      loader.setAttribute('aria-hidden', 'true');
+    }
+
+    // helper to test internal link
+    function isInternalLink(a) {
+      if (!a || !a.getAttribute) return false;
+      const href = a.getAttribute('href') || '';
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+      if (a.target === '_blank' || a.hasAttribute('download') || a.dataset.noSpinner !== undefined) return false;
+      try {
+        const url = new URL(href, location.href);
+        return url.origin === location.origin;
+      } catch (e) {
+        return true; // relative link
+      }
+    }
+
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest && e.target.closest('a');
+      if (!a) return;
+      if (!isInternalLink(a)) return;
+      const href = a.getAttribute('href') || '';
+      if (href.startsWith('#') && href.length > 1) return;
+      showLoader();
+    }, { capture: true });
+
+    document.addEventListener('submit', function (e) {
+      const form = e.target;
+      if (!form || form.dataset.noSpinner !== undefined) return;
+      showLoader();
+    }, { capture: true });
+
+    window.addEventListener('beforeunload', function () { showLoader(); });
+    window.addEventListener('pageshow', function () { hideLoader(); });
+
+    // wrap fetch and XHR
+    (function wrapNetwork() {
+      let activeRequests = 0;
+      const originalFetch = window.fetch;
+      if (originalFetch) {
+        window.fetch = function (...args) {
+          activeRequests++;
+          showLoader();
+          return originalFetch.apply(this, args)
+            .then(resp => {
+              activeRequests = Math.max(0, activeRequests - 1);
+              if (activeRequests === 0) hideLoader();
+              return resp;
+            })
+            .catch(err => {
+              activeRequests = Math.max(0, activeRequests - 1);
+              if (activeRequests === 0) hideLoader();
+              throw err;
+            });
+        };
+      }
+
+      const XHR = window.XMLHttpRequest;
+      if (XHR) {
+        const origOpen = XHR.prototype.open;
+        const origSend = XHR.prototype.send;
+        XHR.prototype.open = function () {
+          this._shouldTrack = true;
+          return origOpen.apply(this, arguments);
+        };
+        XHR.prototype.send = function () {
+          if (this._shouldTrack) {
+            activeRequests++;
+            showLoader();
+            this.addEventListener('readystatechange', function () {
+              if (this.readyState === 4) {
+                activeRequests = Math.max(0, activeRequests - 1);
+                if (activeRequests === 0) hideLoader();
+              }
+            });
+          }
+          return origSend.apply(this, arguments);
+        };
+      }
+    })();
+
+    // safety timeout
+    const SAFETY_TIMEOUT = 15000;
+    let safetyTimer = null;
+    function startSafety() { clearTimeout(safetyTimer); safetyTimer = setTimeout(hideLoader, SAFETY_TIMEOUT); }
+    function clearSafety() { clearTimeout(safetyTimer); }
+
+    const _show = showLoader; const _hide = hideLoader;
+    window.showPageLoader = function () { _show(); startSafety(); };
+    window.hidePageLoader = function () { _hide(); clearSafety(); };
+
+    document.addEventListener('DOMContentLoaded', hideLoader);
+  })();
+
 </script>
-
-
+{% block extra_scripts %}{% endblock %}
 </body>
 </html>

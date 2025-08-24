@@ -25,14 +25,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!u(a60o^0x=u-)c%hmkrgn-5u2-$m^&q(ynn1xvec_uvn#s_if'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = os.getenv('DJANGO_DEBUG', '1') == '1'
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "fallback-hardcoded-key")
+DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
+# DEBUG = os.getenv('DJANGO_DEBUG', '1') == '1'
+# ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+raw_allowed = os.getenv("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost")
+ALLOWED_HOSTS = [h.strip() for h in raw_allowed.split(",") if h.strip()]
 
+raw_csrf = os.getenv("CSRF_TRUSTED_ORIGINS", "http://127.0.0.1:8000, http://localhost:8000")
+CSRF_TRUSTED_ORIGINS = [u.strip() for u in raw_csrf.split(",") if u.strip()]
 
 # Application definition
 
@@ -165,6 +168,12 @@ EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS') in ('1', 'True', 'true')
 DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'cit306@domain.com')
 
 CSRF_TRUSTED_ORIGINS = ["https://cit306.onrender.com"]
-CSRF_COOKIE_SECURE = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SAMESITE = 'Lax'
+#  Cookie security: only enable secure cookies in production (when DEBUG is False and using HTTPS)
+if DEBUG:
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_SAMESITE = "Lax"
+else:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SAMESITE = "Lax"

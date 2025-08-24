@@ -1,0 +1,9 @@
+{# templates/partials/project_banner.html #}
+{# Optional context variables: title, subtitle, meta #}
+<div class="project-banner" role="banner" aria-label="Project header">
+  <div class="project-banner__inner">
+    <h1 class="project-title">{{ title|default:"Federal University of Technology Owerri" }}</h1>
+    <h2 class="project-subtitle">{{ subtitle|default:"Department of Computer Science Students" }}</h2>
+    <p class="project-meta">{{ meta|default:"CIT 306 - Web Development Project · Group 14" }}</p>
+  </div>
+</div>
