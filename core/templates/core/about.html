@@ -1,6 +1,7 @@
 {% extends 'core/base.html' %}
+{% load static %}
 {% block title %}About{% endblock %}
-{% blocck extra_css %}
+{% block extra_css %}
 <style>
   .header {
     background-color: rgb(250, 212, 255);
@@ -33,6 +34,7 @@
   }
 </style>
 {% endblock %}
+
 {% block content %}
 <div class="header">
   <div class="header-content">
