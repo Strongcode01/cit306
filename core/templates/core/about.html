@@ -1,164 +1,188 @@
 {% extends 'core/base.html' %}
 {% load static %}
-{% block title %}About{% endblock %}
+{% block title %}About - Departmental Information Board{% endblock %}
+
 {% block extra_css %}
 <style>
-  .header {
-    background-color: rgb(250, 212, 255);
-    padding: 1rem;
-    width: 100%;
-    margin-bottom: 1rem;
-    border-radius: 1rem;
-  }
+/*---------------------------
+  Hero Section
+----------------------------*/
+.heroBanner {
+  background: url("{% static 'images/bg/department-banner.jpg' %}") no-repeat center center/cover;
+  position: relative;
+  padding: 160px 0 120px;
+  color: #fff;
+  text-align: left;
+}
 
-  .header-content {
-    background-color: beige;
-    color: rgb(30, 0, 68);
-    border-radius: 1rem;
-    border: 1px solid red;
-    padding: 1rem;
-    text-align: center;
-  }
+.heroBanner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(7, 18, 63, 0.9), rgba(17, 44, 93, 0.7));
+  z-index: 0;
+}
 
-  .header-content h1 {
-    font-size: 1.5rem;
-    margin: 0.5rem 0;
-  }
-  .header-content h2 {
-    font-size: 1.2rem;
-    margin: 0.3rem 0;
-  }
-  .header-content h4 {
-    font-size: 1rem;
-    margin: 0.3rem 0;
-  }
+/*---------------------------
+  About Section
+----------------------------*/
+.about-section {
+  background: #f9f9fc;
+  padding: 4rem 2rem;
+  border-radius: 12px;
+  font-family: "Heebo", sans-serif;
+  max-width: 1150px;
+  margin: 3rem auto;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
 
-  .about-section {
-    background: #f9f9fc;
-    padding: 2rem;
-    border-radius: 12px;
-    font-family: "Segoe UI", sans-serif;
-    max-width: 1100px;
-    margin: 2rem auto;
-    
-  }
+.about-section h2 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #0d084d;
+  margin-bottom: 1rem;
+}
 
-  .about-section h2 {
-    text-align: center;
-    font-size: 2rem;
-    color: #14001f;
-    margin-bottom: 1.5rem;
-  }
+.about-section p {
+  color: #3a3a3a;
+  font-size: 17px;
+  line-height: 1.7;
+  margin: 0 auto 2rem;
+  max-width: 900px;
+}
 
-  .about-section p {
-    color: #3a3a3a;
-    line-height: 1.6;
-  }
+/*---------------------------
+  About Cards
+----------------------------*/
+.about-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.8rem;
+  margin-top: 2.5rem;
+}
 
-  /* Card Container */
-  .about-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-    gap: 1.5rem;
-    margin-top: 2rem;
-    
-  }
+.about-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  text-align: left;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
 
-  /* Individual Card */
-  .about-card {
-    background: #fff;
-    border-radius: 12px;
-    padding: 1.5rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    justify-content: center;
-    align-items: center;
-    text-align: justify;
-  }
+.about-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(0, 188, 212, 0.1), rgba(255, 255, 255, 0));
+  transition: all 0.4s ease;
+}
 
-  .about-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
-  }
+.about-card:hover::before {
+  left: 0;
+}
 
-  .about-card h3 {
-    font-size: 1.4rem;
-    color: #10012c;
-    margin-bottom: 0.8rem;
-  }
+.about-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
 
-  .about-card p,
-  .about-card ul {
-    font-size: 1rem;
-    color: #333;
-    line-height: 1.6;
-  }
+.about-card h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #0c0744;
+  margin-bottom: 0.8rem;
+}
 
-  .about-card ul {
-    padding-left: 1.2rem;
-  }
+.about-card p {
+  font-size: 1rem;
+  color: #333;
+  line-height: 1.6;
+}
 
-  .about-card ul li {
-    margin: 0.4rem 0;
-    list-style: none;
-  }
-  @media (max-width: 720px) {
-    .about-cards { grid-template-columns: 1fr; }
-    .about-cards { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))}
-    
+.about-card ul {
+  padding-left: 1.2rem;
+}
+
+.about-card ul li {
+  list-style: none;
+  margin: 0.5rem 0;
+  color: #444;
+  line-height: 1.3rem;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .heroBanner { text-align: center; padding: 120px 0 90px; }
+  .heroContent h2 { font-size: 32px; }
+  .about-section { padding: 2rem 1rem; }
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="header">
-  <div class="header-content">
-    <h1>FEDERAL UNIVERSITY OF TECHNOLOGY, OWERRI</h1>
-    <h2>DEPARTMENT OF COMPUTER SCIENCE STUDENTS</h2>
-    <h4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</h4>
+<!-- Hero Section -->
+<section class="heroBanner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="heroContent">
+          <h5>Department of Computer Science</h5>
+          <h2>Departmental Student Information Board</h2>
+          <p>Welcome to the departmental noticeboard. Stay informed with announcements, events, timetables, and more—all in one place.</p>
+          <div class="heroBreadcrumb">
+            <a href="{% url 'core:home' %}">Home</a>
+            <i class="fa fa-angle-right"></i>
+            <span>About</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
-<div class="about-section">
+</section>
+
+<!-- About Section -->
+<section class="about-section">
   <h2>About the Departmental Board</h2>
   <p>
-    The Departmental Board is a central platform created for 
-    <strong>CIT 306 Web Development Project</strong>. 
-    It serves as an information hub designed to make departmental 
-    communication more accessible, organized, and student-friendly.
+    The Departmental Information Board was developed as part of the <strong>CIT 306 Web Development Project (Group 14)</strong>. 
+    It provides a centralized digital space where students can easily access key departmental updates and academic information.
   </p>
 
   <div class="about-cards">
-    <!-- Purpose Card -->
     <div class="about-card">
-      <h3>Our Purpose</h3>
+      <h3>🎯 Our Purpose</h3>
       <p>
-        The board was built to provide <strong>announcements, events, timetables, 
-        and results</strong> in a single digital space, reducing the stress of searching 
-        for updates across multiple channels.
+        To simplify departmental communication by offering a unified hub for <strong>announcements, events, timetables, and results</strong>—making it easy for students to stay informed.
       </p>
     </div>
 
-    <!-- Features Card -->
     <div class="about-card">
-      <h3>Key Features</h3>
-      <ul>
-        <li><strong>Announcements:</strong> Latest news and departmental updates.</li>
-        <li><strong>Events:</strong> View upcoming seminars and meetings.</li>
-        <li><strong>Timetables:</strong> Access class schedules with ease.</li>
-        <li><strong>Results:</strong> Check uploaded results securely.</li>
+      <h3>💡 Key Features</h3>
+      <ul class="list">
+        <li><strong>Announcements:</strong> Stay updated with departmental news.</li>
+        <li><strong>Events:</strong> View upcoming academic and social programs.</li>
+        <li><strong>Timetables:</strong> Check class and exam schedules easily.</li>
+        <li><strong>Results:</strong> Access uploaded results securely and promptly.</li>
       </ul>
     </div>
 
-    <!-- Vision Card -->
     <div class="about-card">
-      <h3>Our Vision</h3>
+      <h3>🚀 Our Vision</h3>
       <p>
-        We aim to build a more connected departmental community by leveraging 
-        technology to deliver timely information, encourage participation, 
-        and foster a collaborative environment.
+        We aim to foster a connected academic community by leveraging technology for transparency, collaboration, and ease of access to critical departmental information.
       </p>
     </div>
   </div>
-</div>
-
+</section>
 {% endblock %}

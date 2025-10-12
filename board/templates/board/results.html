@@ -3,117 +3,114 @@
 {% block title %}Results{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/boardcard.css' %}">
 <style>
-  .header {
-    background-color: rgb(250, 212, 255);
-    padding: 1rem;
-    width: 100%;
-    margin-bottom: 1rem;
-    border-radius: 1rem;
-  }
+/* =============== RESULTS PAGE =============== */
 
-  .header-content {
-    background-color: beige;
-    color: rgb(30, 0, 68);
-    border-radius: 1rem;
-    border: 1px solid red;
-    padding: 1rem;
-    text-align: center;
-  }
-
-  .header-content h1 {
-    font-size: 1.5rem;
-    margin: 0.5rem 0;
-  }
-  .header-content h2 {
-    font-size: 1.2rem;
-    margin: 0.3rem 0;
-  }
-  .header-content h4 {
-    font-size: 1rem;
-    margin: 0.3rem 0;
-  }
-  .results-section {
-  margin: 2rem 0;
+.results-section {
+  margin: 3rem 0;
+  padding: 0 1rem;
 }
 
+/* Header */
 .results-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5rem;
 }
-
 .results-title {
-  font-size: 1.6rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1f0030;
 }
 
+/* Grid */
 .results-grid {
   list-style: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
+  gap: 1.75rem;
   padding: 0;
 }
 
+/* Card */
 .result-card {
   background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 0.75rem;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
+  border: 1px solid #f0f0f5;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: all 0.25s ease;
 }
-
 .result-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
 }
 
+/* Text */
 .result-title {
-  font-size: 1.2rem;
+  font-size: 1.25rem;
+  font-weight: 600;
   color: #1e0d44;
-  margin: 0 0 0.5rem;
+  margin-bottom: 0.5rem;
 }
-
 .result-meta {
-  font-size: 0.9rem;
-  color: #555;
+  font-size: 0.95rem;
+  color: #6b7280;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
+/* Download */
 .result-download {
   display: inline-block;
-  margin-top: 0.5rem;
+  margin-top: 0.75rem;
   color: #1e613c;
   font-weight: 600;
   text-decoration: none;
+  transition: color 0.2s ease;
 }
-
 .result-download:hover {
+  color: #104326;
   text-decoration: underline;
 }
 
+/* Empty */
 .no-results {
-  grid-column: span 2;
+  grid-column: 1 / -1;
   text-align: center;
+  color: #6b7280;
   font-style: italic;
 }
 </style>
-
 {% endblock %}
+
 {% block content %}
-<div class="header">
-  <div class="header-content">
-    <h1>FEDERAL UNIVERSITY OF TECHNOLOGY, OWERRI</h1>
-    <h2>DEPARTMENT OF COMPUTER SCIENCE STUDENTS</h2>
-    <h4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</h4>
+<!-- Hero Banner -->
+<section class="heroBanner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="heroContent">
+          <h5>Department of Computer Science</h5>
+          <h2>Departmental Student Information Board</h2>
+          <p>Welcome to the departmental noticeboard. Get announcements, events, and timetables here.</p>
+          <div class="heroBreadcrumb">
+            <a href="{% url 'core:home' %}">Home</a>
+            <i class="fa fa-angle-right"></i>
+            <span> >> Results</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
 <!-- Results Section -->
 <section class="results-section">
   <div class="results-header">
-    <h2 class="results-title">Results</h2>
+    <h2 class="results-title">Student Results</h2>
   </div>
 
   <ul class="results-grid">
@@ -121,8 +118,7 @@
     <li class="result-card">
       <h3 class="result-title">{{ r.title }}</h3>
       <div class="result-meta">
-        <span>{{ r.level }}</span>
-        <span>• {{ r.session }}</span>
+        <span>{{ r.level }}</span> • <span>{{ r.session }}</span>
       </div>
       {% if r.file %}
       <a href="{{ r.file.url }}" download class="result-download">

@@ -1,195 +1,223 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block title %}Announcements{% endblock %}
+
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/announcement.css' %}">
 <style>
-  .header {
-    background-color: rgb(250, 212, 255);
-    padding: 1rem;
-    width: 100%;
-    margin-bottom: 1rem;
-    border-radius: 1rem;
+  /* === Page Structure === */
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f9f9fc;
+    color: #1a0033;
+    margin: 0;
   }
 
-  .header-content {
-    background-color: beige;
-    color: rgb(30, 0, 68);
-    border-radius: 1rem;
-    border: 1px solid red;
-    padding: 1rem;
+  /* === Page Header === */
+  .announcements-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 2rem auto 1.5rem;
+    max-width: 1100px;
+    padding: 0 1rem;
+  }
+
+  .announcements-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #24004a;
+    margin: 0;
+    letter-spacing: 0.3px;
+  }
+
+  /* === Search Bar === */
+  .search-inline {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .search-inline input {
+    padding: 0.55rem 0.8rem;
+    border: 1px solid #d4c4ff;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    min-width: 240px;
+    background: #ffffff;
+    transition: border-color 0.3s ease;
+  }
+
+  .search-inline input:focus {
+    outline: none;
+    border-color: #7b3ffb;
+  }
+
+  .search-inline button {
+    padding: 0.55rem 1rem;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #5c2d91, #7d3cff);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .search-inline button:hover {
+    background: linear-gradient(135deg, #7d3cff, #5c2d91);
+    transform: translateY(-2px);
+  }
+
+  /* === Announcements Grid === */
+  .announcements-grid {
+    list-style: none;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* === Announcement Card === */
+  .announcement-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #ece6ff;
+    box-shadow: 0 6px 18px rgba(31, 0, 48, 0.04);
+    padding: 1.5rem;
+    transition: transform 160ms ease, box-shadow 160ms ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .announcement-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 26px rgba(31, 0, 48, 0.08);
+  }
+
+  .announcement-link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .announcement-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: #1a0033;
+    margin: 0 0 0.4rem 0;
+    transition: color 0.2s ease;
+  }
+
+  .announcement-link:hover .announcement-title {
+    color: #5c2d91;
+  }
+
+  /* === Meta Info === */
+  .announcement-meta {
+    font-size: 0.85rem;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .pinned-badge {
+    background: #fff4e5;
+    color: #b45309;
+    padding: 0.2rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    border: 1px solid rgba(180,83,9,0.1);
+  }
+
+  /* === Excerpt === */
+  .announcement-excerpt {
+    margin: 0.75rem 0 0;
+    color: #383051;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  /* === Empty State === */
+  .no-announcements {
+    grid-column: 1 / -1;
     text-align: center;
+    color: #7a7a8b;
+    font-style: italic;
+    padding: 3rem 0;
   }
 
-  .header-content h1 {
-    font-size: 1.5rem;
-    margin: 0.5rem 0;
+  /* === Responsive === */
+  @media (max-width: 768px) {
+    .announcements-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .search-inline input {
+      min-width: 160px;
+    }
+
+    .announcements-title {
+      font-size: 1.4rem;
+    }
   }
-  .header-content h2 {
-    font-size: 1.2rem;
-    margin: 0.3rem 0;
-  }
-  .header-content h4 {
-    font-size: 1rem;
-    margin: 0.3rem 0;
-  }
-  /* Announcements header: title left, search right */
-.announcements-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-/* Title */
-.announcements-title {
-  margin: 0;
-  font-size: 1.5rem;
-  line-height: 1;
-  color: #1f0030; /* adjust to your theme */
-}
-
-/* Search form aligned right */
-.search-inline {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-.search-inline input {
-  padding: 0.45rem 0.6rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  min-width: 220px;
-  font-size: 0.95rem;
-}
-.search-inline button {
-  padding: 0.45rem 0.7rem;
-  border: none;
-  background: #1e613c; /* primary color */
-  color: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-}
-.search-inline button:hover { opacity: 0.95; }
-
-/* Grid for cards: two columns, responsive */
-.announcements-grid {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
-}
-
-/* Card */
-.announcement-card {
-  background: #ffffff;
-  border: 1px solid #edf0f2;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 6px 18px rgba(31,0,48,0.03);
-  transition: transform 160ms ease, box-shadow 160ms ease;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-.announcement-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(31,0,48,0.08);
-}
-
-/* Title link */
-.announcement-link { text-decoration: none; color: inherit; }
-.announcement-title {
-  margin: 0 0 0.15rem 0;
-  font-size: 1.05rem;
-  color: #111827;
-  line-height: 1.2;
-}
-
-/* Meta row (date + pinned) */
-.announcement-meta {
-  font-size: 0.85rem;
-  color: #6b7280;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-.pinned-badge {
-  display: inline-block;
-  margin-left: 0.25rem;
-  background: #fff4e5;
-  color: #b45309;
-  padding: 0.15rem 0.45rem;
-  border-radius: 999px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  border: 1px solid rgba(180,83,9,0.08);
-}
-
-/* Excerpt */
-.announcement-excerpt {
-  margin: 0.5rem 0 0 0;
-  color: #374151;
-  font-size: 0.95rem;
-  line-height: 1.45;
-  flex: 1 1 auto;
-}
-
-/* Empty state */
-.no-announcements {
-  grid-column: 1 / -1;
-  color: #6b7280;
-  text-align: center;
-}
-
-/* Mobile: single column */
-@media (max-width: 720px) {
-  .announcements-grid { grid-template-columns: 1fr; }
-  .search-inline input { min-width: 140px; }
-}
-
 </style>
 {% endblock %}
-{% block content %}
-<div class="header">
-  <div class="header-content">
-    <h1>FEDERAL UNIVERSITY OF TECHNOLOGY, OWERRI</h1>
-    <h2>DEPARTMENT OF COMPUTER SCIENCE STUDENTS</h2>
-    <h4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</h4>
-  </div>
-</div>
-<div class="announcements-header">
-  <h2 class="announcements-title">Announcements</h2>
 
+{% block content %}
+<!-- Hero Section Start -->
+<section class="heroBanner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="heroContent">
+          <h5>Department of Computer Science</h5>
+          <h2>Departmental Student Information Board</h2>
+          <p>Welcome to the departmental noticeboard. Get announcements, events, and timetables here.</p>
+          <div class="heroBreadcrumb">
+            <a href="{% url 'core:home' %}">Home</a>
+            <i class="fa fa-angle-right"></i>
+            <span> >> Announcements</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Hero Section End -->
+
+<!-- Announcements Header -->
+<div class="announcements-header">
+  <h2 class="announcements-title">Latest Announcements</h2>
   <form method="get" class="search-inline" role="search" aria-label="Search announcements">
     <input name="q" placeholder="Search announcements" value="{{ request.GET.q|default_if_none:'' }}" />
     <button type="submit">Search</button>
   </form>
 </div>
 
+<!-- Announcements Grid -->
 <ul class="announcements-grid" aria-live="polite">
   {% for a in announcements %}
   <li class="announcement-card">
     <a class="announcement-link" href="{% url 'board:announcement_detail' a.pk %}">
       <h3 class="announcement-title">{{ a.title }}</h3>
     </a>
-
     <div class="announcement-meta">
       <time datetime="{{ a.publish_date|date:'Y-m-d' }}">{{ a.publish_date|date:'M d, Y' }}</time>
       {% if a.is_pinned %}
         <span class="pinned-badge" aria-hidden="true">Pinned</span>
       {% endif %}
     </div>
-
     <p class="announcement-excerpt">{{ a.body|truncatechars:180 }}</p>
   </li>
   {% empty %}
-  <li class="no-announcements">No announcements</li>
+  <li class="no-announcements">No announcements available at the moment.</li>
   {% endfor %}
 </ul>
-
 {% endblock %}

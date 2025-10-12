@@ -109,13 +109,27 @@
 {% endblock %}
 
 {% block content %}
-<div class="header">
-  <div class="header-content">
-    <h1>FEDERAL UNIVERSITY OF TECHNOLOGY, OWERRI</h1>
-    <h2>DEPARTMENT OF COMPUTER SCIENCE STUDENTS</h2>
-    <h4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</h4>
-  </div>
-</div>
+<!-- Hero Section Start -->
+<section class="heroBanner">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <div class="heroContent">
+                    <h5>Department of Computer Science</h5>
+                    <h2>Departmental Student Information Board</h2>
+                    <p>Welcome to the departmental noticeboard. Get announcements, events, and timetables here.</p>
+                    <div class="heroBreadcrumb">
+                        <a href="{% url 'core:home' %}">Home</a>
+                        <i class="fa fa-angle-right">  </i>
+                        <span> >> Contact-us</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hero Section End -->
+
 
 <div class="contact-section">
   <form method="post" class="contact-form">

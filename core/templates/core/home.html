@@ -1,42 +1,110 @@
 {% extends 'core/base.html' %}
 {% load static %}
 {% block title %}Home{% endblock %}
-{% block head %} 
+
+{% block head %}
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
-  :root {
-    margin: 0;
-  }
-  .header {
-    background-color: rgb(250, 212, 255);
-    padding: 1rem;
-    width: 100%;
-    margin-bottom: 1rem;
-    border-radius: 1rem;
-  }
+/* ------------------------------
+   GENERAL PAGE STYLING
+--------------------------------*/
+body {
+  background-color: #faf9ff;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  color: #222;
+}
 
-  .header-content {
-    background-color: beige;
-    color: rgb(30, 0, 68);
-    border-radius: 1rem;
-    border: 1px solid red;
-    padding: 1rem;
-    text-align: center;
-  }
+/* ------------------------------
+   SECTION LAYOUTS
+--------------------------------*/
+.hero-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.05);
+}
 
-  .header-content h1 {
-    font-size: 1.5rem;
-    margin: 0.5rem 0;
-  }
-  .header-content h2 {
-    font-size: 1.2rem;
-    margin: 0.3rem 0;
-  }
-  .header-content h4 {
-    font-size: 1rem;
-    margin: 0.3rem 0;
-  }
-  .announcements-header {
+.hero-section .hero-image img {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 1rem;
+  object-fit: cover;
+}
+
+.hero-section .hero-text {
+  flex: 1;
+  text-align: left;
+}
+
+.hero-section .hero-text h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f0030;
+  margin-bottom: 0.75rem;
+}
+
+.hero-section .hero-text p {
+  color: #555;
+  font-size: 1.05rem;
+  margin-bottom: 1.25rem;
+}
+
+.act-btn {
+  background: rgba(2, 9, 77, 0.8);
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.4rem;
+  margin-right: 0.8rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.act-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(106, 27, 154, 0.25);
+}
+
+.pageBreadCum {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #777;
+}
+.pageBreadCum a {
+  color: #6a1b9a;
+  text-decoration: none;
+}
+.pageBreadCum a:hover { text-decoration: underline; }
+
+/* ------------------------------
+   ANNOUNCEMENTS & EVENTS SECTION
+--------------------------------*/
+.cards {
+  max-width: 1200px;
+  margin: 3rem auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  padding: 0 1rem;
+}
+
+.card {
+  background: #fff;
+  padding: 2rem 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+/* Section Headers */
+.announcements-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -44,15 +112,14 @@
   margin-bottom: 1.25rem;
 }
 
-/* Title */
 .announcements-title {
   margin: 0;
   font-size: 1.5rem;
-  line-height: 1;
-  color: #1f0030; /* adjust to your theme */
+  font-weight: 700;
+  color: #1f0030;
 }
 
-/* Search form aligned right */
+/* Search Bar */
 .search-inline {
   display: flex;
   gap: 0.5rem;
@@ -68,51 +135,56 @@
 .search-inline button {
   padding: 0.45rem 0.7rem;
   border: none;
-  background: #1e613c; /* primary color */
+  background: #1e613c;
   color: #fff;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
 }
-.search-inline button:hover { opacity: 0.95; }
+.search-inline button:hover {
+  opacity: 0.95;
+}
 
-/* Grid for cards: two columns, responsive */
+/* Grid for Announcements & Events */
 .announcements-grid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
-/* Card */
+/* Cards */
 .announcement-card {
   background: #ffffff;
   border: 1px solid #edf0f2;
   border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 6px 18px rgba(31,0,48,0.03);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 6px 18px rgba(31, 0, 48, 0.03);
   transition: transform 160ms ease, box-shadow 160ms ease;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
 }
+
 .announcement-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(31,0,48,0.08);
 }
 
-/* Title link */
-.announcement-link { text-decoration: none; color: inherit; }
-.announcement-title {
-  margin: 0 0 0.15rem 0;
-  font-size: 1.05rem;
-  color: #111827;
-  line-height: 1.2;
+.announcement-link {
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Meta row (date + pinned) */
+.announcement-title {
+  margin: 0 0 0.15rem 0;
+  font-size: 1.1rem;
+  color: #111827;
+  line-height: 1.3;
+}
+
 .announcement-meta {
   font-size: 0.85rem;
   color: #6b7280;
@@ -120,6 +192,7 @@
   gap: 0.5rem;
   align-items: center;
 }
+
 .pinned-badge {
   display: inline-block;
   margin-left: 0.25rem;
@@ -132,7 +205,6 @@
   border: 1px solid rgba(180,83,9,0.08);
 }
 
-/* Excerpt */
 .announcement-excerpt {
   margin: 0.5rem 0 0 0;
   color: #374151;
@@ -141,22 +213,54 @@
   flex: 1 1 auto;
 }
 
-/* Empty state */
 .no-announcements {
   grid-column: 1 / -1;
   color: #6b7280;
   text-align: center;
 }
 
-/* Mobile: single column */
-@media (max-width: 720px) {
-  .announcements-grid { grid-template-columns: 1fr; }
-  .search-inline input { min-width: 140px; }
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .hero-section {
+    flex-direction: column;
+    text-align: center;
+  }
+  .hero-section .hero-text {
+    text-align: center;
+  }
+  .hero-section .hero-image img {
+    max-width: 100%;
+  }
+  .cards {
+    padding: 0 1rem;
+  }
 }
 </style>
 {% endblock %}
 
 {% block content %}
+
+<!-- Hero Banner (Keep existing) -->
+<section class="heroBanner">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="heroContent">
+          <h5>Department of Computer Science</h5>
+          <h2>Departmental Student Information Board</h2>
+          <p>Welcome to the departmental noticeboard. Get announcements, events, and timetables here.</p>
+          <div class="heroBreadcrumb">
+            <i class="fa fa-angle-right"></i>
+            <span> Home </span>
+          </div>
+          <a href="{% url 'accounts:signup' %}"><button class="act-btn">Team Signup</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Hero Section (custom content) -->
 <section class="hero-section">
   <div class="hero-image">
     <img src="{% static 'images/hero1.jpg' %}" alt="Department noticeboard illustration">
@@ -164,27 +268,13 @@
   <div class="hero-text">
     <h1>Departmental Student Information Board</h1>
     <p>Welcome to the departmental noticeboard. Get announcements, events and timetables here.</p>
-    <a href="{% url 'team:credentials' %}"><button class="act-btn"
-    >Check Participants</button></a>
-  <a href="{% url 'accounts:signup' %}"><button class="act-btn"
-    >Group Members Signup</button></a>
-  </div>
-  <div class="pageBreadCum">
-      <a href="{% url 'core:home' %}">Home</a>
-      <i class="fa fa-angle-right"></i>
-      <span>About Us</span>
+    <a href="{% url 'team:credentials' %}"><button class="act-btn">Check Participants</button></a>
+    <a href="{% url 'accounts:signup' %}"><button class="act-btn">Group Members Signup</button></a>
   </div>
 </section>
 
-<div class="header">
-  <div class="header-content">
-    <h1>FEDERAL UNIVERSITY OF TECHNOLOGY, OWERRI</h1>
-    <h2>DEPARTMENT OF COMPUTER SCIENCE STUDENTS</h2>
-    <h4>CIT 306 WEB DEVELOPMENT PROJECT, GROUP 14</h4>
-  </div>
-</div>
-<section class="cards" style="align-self: center; justify-content: center;">
-
+<!-- Announcements & Events -->
+<section class="cards">
   <!-- Announcements -->
   <div class="card">
     <div class="announcements-header">
@@ -234,7 +324,6 @@
       {% endfor %}
     </ul>
   </div>
-
 </section>
 
 {% endblock %}
