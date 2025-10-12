@@ -11,7 +11,9 @@ class Profile(models.Model):
     serial_number = models.CharField(max_length=100, blank=True)
     department = models.CharField(max_length=50, blank=True)
     newsletter = models.BooleanField(default=False)
+    phone = models.CharField(max_length=20, blank=True)
     avatar = models.ImageField(upload_to="avatars/", default="avatars/default.png")
+    is_team_member = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Profile: {self.user.username}"

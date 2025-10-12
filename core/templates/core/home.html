@@ -4,6 +4,9 @@
 {% block head %} 
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 <style>
+  :root {
+    margin: 0;
+  }
   .header {
     background-color: rgb(250, 212, 255);
     padding: 1rem;
@@ -150,9 +153,9 @@
   .announcements-grid { grid-template-columns: 1fr; }
   .search-inline input { min-width: 140px; }
 }
-
 </style>
 {% endblock %}
+
 {% block content %}
 <section class="hero-section">
   <div class="hero-image">
@@ -165,6 +168,11 @@
     >Check Participants</button></a>
   <a href="{% url 'accounts:signup' %}"><button class="act-btn"
     >Group Members Signup</button></a>
+  </div>
+  <div class="pageBreadCum">
+      <a href="{% url 'core:home' %}">Home</a>
+      <i class="fa fa-angle-right"></i>
+      <span>About Us</span>
   </div>
 </section>
 

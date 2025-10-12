@@ -46,11 +46,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'accounts.apps.AccountsConfig',
     # local apps we created (in project root)
     'core',
     'board',
     'team',
-    'accounts',
+    # 'accounts',
 ]
 
 MIDDLEWARE = [

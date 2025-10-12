@@ -1,3 +1,4 @@
+# forms.py
 import re
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
@@ -37,6 +38,10 @@ class SignupForm(UserCreationForm):
         label="Serial number", max_length=100, required=True,
         widget=forms.TextInput(attrs={"placeholder": "Serial number"})
     )
+    phone = forms.CharField(
+        label = "phone", max_length=20, required=False,
+        widget=forms.TextInput(attrs={"placeholder" : "Phone Number"})
+    )
     newsletter = forms.BooleanField(
         label="Receive Weekly Emails", required=False, initial=False
     )
@@ -44,16 +49,7 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("username", "email", "password1", "password2")
-
-    # --- Temporary hardcoded whitelist (edit here while the freeze is active) ---
-    TEMP_ALLOWED = [
-        "20221351185",
-        "20223453434",
-        "20224567890",
-        "20221234567",
-    ]
-    # ---------------------------------------------------------------------------
+        fields = ("username", "email", "phone", "password1", "password2")
 
     def clean_matric_number(self):
         raw = self.cleaned_data.get("matric_number")
@@ -61,12 +57,6 @@ class SignupForm(UserCreationForm):
 
         if not matric:
             raise forms.ValidationError("Matric number is required.")
-
-        # 1) Temporary gate: must be in hardcoded list
-        if matric not in self.TEMP_ALLOWED:
-            raise forms.ValidationError("This matric number is not currently allowed for signup.")
-
-        # 2) DB allowlist gate
         try:
             allowed = AllowedMatric.objects.get(matric_number=matric)
         except AllowedMatric.DoesNotExist:
@@ -75,7 +65,6 @@ class SignupForm(UserCreationForm):
         if allowed.used:
             raise forms.ValidationError("You have already signed up with this matric number! Try login in.")
 
-        # Store normalized version so save() uses it
         self.cleaned_data["matric_number"] = matric
         return matric
 
@@ -123,7 +112,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ["matric_number", "serial_number", "department", "newsletter", "avatar"]
+        fields = ["matric_number", "serial_number", "department", "phone", "newsletter", "avatar"]
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop("user", None)
@@ -131,10 +120,11 @@ class ProfileForm(forms.ModelForm):
         if user:
             self.fields["full_name"].initial = f"{user.first_name} {user.last_name}"
             self.fields["email"] = forms.EmailField(initial=user.email, required=True)
-        self.fields["matric_number"].disabled = True
-        self.fields["serial_number"].disabled = True
-        self.fields["email"].disabled = True
-        self.fields["department"].disabled = True
+            self.fields["matric_number"].disabled = True
+            self.fields["serial_number"].disabled = True
+            self.fields["email"].disabled = True
+            self.fields["department"].disabled = True
+            self.fields["phone"].disabled = True
 
     def save(self, commit=True):
         profile = super().save(commit=False)

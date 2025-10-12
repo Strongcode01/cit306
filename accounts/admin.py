@@ -10,6 +10,6 @@ class AllowedMatricAdmin(admin.ModelAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ("user", "matric_number", "serial_number", "department", "newsletter")
-    search_fields = ("user__username", "matric_number", "serial_number")
-    list_filter = ("newsletter",)
+    list_display = ("user", "matric_number", "department", "is_team_member")
+    list_filter = ("is_team_member", "department")
+    search_fields = ("user__username", "matric_number", "user__first_name", "user__last_name")

@@ -3,10 +3,24 @@
   --muted: #666;
   --accent: #0d6efd;
   --bg: #fbfbfb;
+  margin: 0;
+  width: 100%;
 }
-*{box-sizing:border-box}
-body{font-family:Inter, Arial, sans-serif;margin:0;background:var(--bg);color:#111}
-.container{width:98%;max-width:1200px;margin:0 auto;padding:1rem}
+* {
+  box-sizing:border-box
+}
+body {
+  font-family:Inter, Arial, sans-serif;
+  margin:0;
+  background:var(--bg);
+  color:#111
+}
+.container {
+  width:100%;
+  max-width:1200px;
+  margin:0 auto;
+  padding:1rem
+}
 .site-header{
   background:#e4f4ff;
   border-bottom:1px solid #eee;
@@ -114,7 +128,8 @@ body{font-family:Inter, Arial, sans-serif;margin:0;background:var(--bg);color:#1
   align-items: center;
   gap: 3rem;
   padding: 3rem 1rem;
-  max-width: 100vw;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
   background-color: #d7d7d8d0;
 }
@@ -138,6 +153,7 @@ body{font-family:Inter, Arial, sans-serif;margin:0;background:var(--bg);color:#1
   box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   overflow: hidden;
   justify-self: center;
+  align-self: center;
   padding-left: 2rem;
 }
 
@@ -154,7 +170,7 @@ body{font-family:Inter, Arial, sans-serif;margin:0;background:var(--bg);color:#1
 
 .cards{
   display:flex;
-  gap:1rem;
+  gap:2rem;
   margin:1rem 0;
   align-content: center;
   justify-content: center;

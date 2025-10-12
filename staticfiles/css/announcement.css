@@ -1,0 +1,118 @@
+/* Announcements header: title left, search right */
+.announcements-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Title */
+.announcements-title {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #1f0030; /* adjust to your theme */
+}
+
+/* Search form aligned right */
+.search-inline {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.search-inline input {
+  padding: 0.45rem 0.6rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  min-width: 220px;
+  font-size: 0.95rem;
+}
+.search-inline button {
+  padding: 0.45rem 0.7rem;
+  border: none;
+  background: #1e613c; /* primary color */
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.search-inline button:hover { opacity: 0.95; }
+
+/* Grid for cards: two columns, responsive */
+.announcements-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+/* Card */
+.announcement-card {
+  background: #ffffff;
+  border: 1px solid #edf0f2;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 6px 18px rgba(31,0,48,0.03);
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.announcement-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(31,0,48,0.08);
+}
+
+/* Title link */
+.announcement-link { text-decoration: none; color: inherit; }
+.announcement-title {
+  margin: 0 0 0.15rem 0;
+  font-size: 1.05rem;
+  color: #111827;
+  line-height: 1.2;
+}
+
+/* Meta row (date + pinned) */
+.announcement-meta {
+  font-size: 0.85rem;
+  color: #6b7280;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.pinned-badge {
+  display: inline-block;
+  margin-left: 0.25rem;
+  background: #fff4e5;
+  color: #b45309;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  border: 1px solid rgba(180,83,9,0.08);
+}
+
+/* Excerpt */
+.announcement-excerpt {
+  margin: 0.5rem 0 0 0;
+  color: #374151;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  flex: 1 1 auto;
+}
+
+/* Empty state */
+.no-announcements {
+  grid-column: 1 / -1;
+  color: #6b7280;
+  text-align: center;
+}
+
+/* Mobile: single column */
+@media (max-width: 720px) {
+  .announcements-grid { grid-template-columns: 1fr; }
+  .search-inline input { min-width: 140px; }
+}
