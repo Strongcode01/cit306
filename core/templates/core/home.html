@@ -121,9 +121,9 @@ body {
 
 /* Search Bar */
 .search-inline {
-  display: flex;
+  display: inline-flex;
   gap: 0.5rem;
-  align-items: center;
+  align-items: right;
 }
 .search-inline input {
   padding: 0.45rem 0.6rem;
@@ -165,7 +165,7 @@ body {
   transition: transform 160ms ease, box-shadow 160ms ease;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
 .announcement-card:hover {
@@ -233,7 +233,7 @@ body {
   }
   .cards {
     padding: 0 1rem;
-    margin: 2rem 4rem 2rem 4rem;
+    margin: 1rem;
     display: flex;
     flex-direction: column;
   }
@@ -256,7 +256,11 @@ body {
             <i class="fa fa-angle-right"></i>
             <span> Home </span>
           </div>
-          <a href="{% url 'accounts:signup' %}"><button class="act-btn">Team Signup</button></a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'team:credentials' %}"><button class="act-btn">View Team</button></a>
+          {% else %}
+            <a href="{% url 'accounts:signup' %}"><button class="act-btn">Team Signup</button></a>
+          {% endif %}
         </div>
       </div>
     </div>
@@ -282,11 +286,11 @@ body {
   <div class="card">
     <div class="announcements-header">
       <h3 class="announcements-title">Latest Announcements</h3>
-      <form method="get" class="search-inline">
-        <input name="q" placeholder="Search announcements" value="{{ request.GET.q }}">
-        <button type="submit">Search</button>
-      </form>
     </div>
+    <form method="get" class="search-inline">
+      <input name="q" placeholder="Search announcements" value="{{ request.GET.q }}">
+      <button type="submit">Search</button>
+    </form>
 
     <ul class="announcements-grid">
       {% for a in announcements %}
