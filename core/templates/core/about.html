@@ -5,25 +5,6 @@
 {% block extra_css %}
 <style>
 /*---------------------------
-  Hero Section
-----------------------------*/
-.heroBanner {
-  background: url("{% static 'images/bg/department-banner.jpg' %}") no-repeat center center/cover;
-  position: relative;
-  padding: 160px 0 120px;
-  color: #fff;
-  text-align: left;
-}
-
-.heroBanner::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, rgba(7, 18, 63, 0.9), rgba(17, 44, 93, 0.7));
-  z-index: 0;
-}
-
-/*---------------------------
   About Section
 ----------------------------*/
 .about-section {
@@ -138,8 +119,8 @@
       <div class="col-md-10 col-lg-8 col-xl-7">
         <div class="heroContent">
           <h5>Department of Computer Science</h5>
-          <h2>Departmental Student Information Board</h2>
-          <p>Welcome to the departmental noticeboard. Stay informed with announcements, events, timetables, and more—all in one place.</p>
+          <h2>About the Department of Computer Science</h2>
+          <p>Learn more about our department’s mission, values, and the people driving innovation and excellence in computing education.</p>
           <div class="heroBreadcrumb">
             <a href="{% url 'core:home' %}">Home</a>
             <i class="fa fa-angle-right"></i>

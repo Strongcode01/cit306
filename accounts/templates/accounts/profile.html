@@ -73,10 +73,14 @@
     color: #1f0030;
   }
   .profile-main p {
-    margin: 0.3rem 0;
+    margin: 0.5rem 0;
     font-size: 1rem;
     color: #444;
+    line-height: 2rem;
+    justify-content: center;
+    
   }
+
 
   /* Responsiveness */
   @media (max-width: 992px) {
@@ -124,9 +128,7 @@
   <!-- Sidebar -->
   <aside class="profile-sidebar">
     <h3>Menu</h3>
-    <button class="nav-toggle" aria-controls="mobile-menu" aria-expanded="false">
-      ☰
-    </button>
+    
     <ul>
       <li><a href="{% url 'core:home' %}">Home</a></li>
       <li><a href="{% url 'accounts:profile' %}">Profile</a></li>
@@ -143,10 +145,11 @@
     <img src="{% static 'images/default-avatar.png' %}" alt="Avatar" class="profile-avatar">
 
     <h2>{{ user.get_full_name|default:user.username }}</h2>
-    <p><strong>Matric:</strong> {{ user.username }}</p>
-    <p><strong>Department:</strong> {{ user.Profile.department }}</p>
-    <p><strong>Email:</strong> {{ user.email }}</p>
+    <div class="profile_container">
+      <p class="profile_id"><strong>Matric:</strong> {{ user.username }}</p>
+      <p class="profile_id"><strong>Department:</strong> {{ user.profile.department }}</p>
+      <p class="profile_id"><strong>Email:</strong> {{ user.email }}</p>
+    </div>
   </div>
-
 </div>
 {% endblock %}
