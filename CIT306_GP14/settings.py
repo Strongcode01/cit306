@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'core',
     'board',
     'team',
-    # 'accounts',
 ]
 
 MIDDLEWARE = [
@@ -104,7 +103,6 @@ else:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-
 
 
 # Password validation
