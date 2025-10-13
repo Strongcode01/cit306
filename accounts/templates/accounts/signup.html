@@ -140,7 +140,7 @@ body {
 
     <div class="newsletter-section">
       <input id="signup-newsletter" type="checkbox" name="newsletter" {% if form.newsletter.value %}checked{% endif %}>
-      <label for="signup-newsletter">Receive Weekly Emails</label>
+      <label for="signup-newsletter" style="color: #1f0030;">Receive Weekly Emails</label>
     </div>
 
     <input type="hidden" name="username" value="{{ form.username.value|default_if_none:'' }}">
