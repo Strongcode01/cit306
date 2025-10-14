@@ -31,6 +31,105 @@
     font-size: 1rem;
     margin: 0.3rem 0;
   }
+
+  /* Container styling */
+.timetable-container {
+  padding: 2rem 1rem;
+  background: linear-gradient(135deg, #f5f7fa, #e6ecf5);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  max-width: 1000px;
+  margin: 2rem auto;
+  font-family: "Inter", sans-serif;
+}
+
+/* Heading */
+.timetable-heading {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1f0030;
+  margin-bottom: 1.2rem;
+}
+
+/* Table wrapper (for responsiveness) */
+.timetable-wrapper {
+  overflow-x: auto;
+  border-radius: 10px;
+}
+
+/* Main table */
+.timetable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Table headers */
+.timetable thead {
+  background: #5a28cc;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.timetable th {
+  padding: 12px 10px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Table rows */
+.timetable td {
+  padding: 12px 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+/* Alternating row color */
+.timetable tbody tr:nth-child(even) {
+  background-color: #f9f9ff;
+}
+
+/* Hover effect */
+.timetable tbody tr:hover {
+  background-color: #f1ebff;
+  transition: all 0.3s ease;
+}
+
+/* No data row */
+.no-data {
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .timetable-heading {
+    font-size: 1.4rem;
+  }
+  .timetable th, .timetable td {
+    padding: 10px 8px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .timetable-container {
+    padding: 1rem 0.5rem;
+  }
+  .timetable-wrapper {
+    overflow-x: scroll;
+  }
+  .timetable {
+    font-size: 0.8rem;
+    min-width: 600px; /* ensures scroll instead of squishing */
+  }
+}
 </style>
 {% endblock %}
 
@@ -60,34 +159,36 @@
 </button>
 
 <!-- Printable Timetable Area -->
-<div id="timetable-printable">
-  <h2 style="text-align:center;">Timetable</h2>
-  <table class="timetable" style="width:100%; border-collapse: collapse; margin-top: 1rem;">
-    <thead>
-      <tr>
-        <th style="border:1px solid #333; padding:8px;">Course</th>
-        <th style="border:1px solid #333; padding:8px;">Level</th>
-        <th style="border:1px solid #333; padding:8px;">Semester</th>
-        <th style="border:1px solid #333; padding:8px;">Day</th>
-        <th style="border:1px solid #333; padding:8px;">Time</th>
-        <th style="border:1px solid #333; padding:8px;">Venue</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for t in timetable %}
-      <tr>
-        <td style="border:1px solid #333; padding:8px;">{{ t.course_code }}</td>
-        <td style="border:1px solid #333; padding:8px;">{{ t.level }}</td>
-        <td style="border:1px solid #333; padding:8px;">{{ t.semester }}</td>
-        <td style="border:1px solid #333; padding:8px;">{{ t.day }}</td>
-        <td style="border:1px solid #333; padding:8px;">{{ t.start_time }} - {{ t.end_time }}</td>
-        <td style="border:1px solid #333; padding:8px;">{{ t.venue }}</td>
-      </tr>
-      {% empty %}
-      <tr><td colspan="6" style="border:1px solid #333; padding:8px; text-align:center;">No timetable entries</td></tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div id="timetable-printable" class="timetable-container">
+  <h2 class="timetable-heading">Departmental Lecture Timetable</h2>
+  <div class="timetable-wrapper">
+    <table class="timetable">
+      <thead>
+        <tr>
+          <th>Course</th>
+          <th>Level</th>
+          <th>Semester</th>
+          <th>Day</th>
+          <th>Time</th>
+          <th>Venue</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in timetable %}
+        <tr>
+          <td>{{ t.course_code }}</td>
+          <td>{{ t.level }}</td>
+          <td>{{ t.semester }}</td>
+          <td>{{ t.day }}</td>
+          <td>{{ t.start_time }} - {{ t.end_time }}</td>
+          <td>{{ t.venue }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="6" class="no-data">No timetable entries</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <!-- Print Script -->
