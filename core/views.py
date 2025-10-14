@@ -18,3 +18,9 @@ def contact(request):
         print(f'Contact message from {name} <{email}>: {message}')
         return redirect('core:home')
     return render(request, 'core/contact.html')
+
+def report(request):
+    return render(request, 'core/report.html')
+
+def documentation(request):
+    return render(request, 'core/documentation.html')

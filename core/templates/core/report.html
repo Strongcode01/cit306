@@ -1,0 +1,99 @@
+{% extends 'core/base.html' %}
+{% block title %}Project Report{% endblock %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+.report-container {
+  max-width: 1000px;
+  margin: 3rem auto;
+  background: #fff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  font-family: "Inter", sans-serif;
+  line-height: 1.7;
+}
+.report-container h1 {
+  text-align: center;
+  color: #5a28cc;
+  margin-bottom: 1.5rem;
+}
+.report-container h2 {
+  color: #432099;
+  border-left: 5px solid #5a28cc;
+  padding-left: 10px;
+  margin-top: 1.5rem;
+}
+.report-container ul, ol {
+  margin-left: 1.5rem;
+}
+.report-container p {
+  margin-bottom: 1rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<button onclick="window.print()" style="background:#5a28cc; color:#fff; padding:8px 15px; border:none; border-radius:6px; cursor:pointer; float:right;">
+  Print Report
+</button>
+<div class="report-container">
+  <h1>Project Report – CIT 306 GP 14</h1>
+  <h2>1. Introduction</h2>
+  <p>The Departmental Student Information Board (DSIB) is a web platform developed to simplify communication within the Department of Computer Science, FUTO.</p>
+
+  <h2>2. Objectives</h2>
+  <ul>
+    <li>Provide centralized departmental updates.</li>
+    <li>Enable authorized student registration.</li>
+    <li>Allow admin management of announcements and timetables.</li>
+  </ul>
+
+  <h2>3. Tools and Technologies</h2>
+  <ul>
+    <li>Django (Python framework)</li>
+    <li>HTML5, CSS3, JavaScript</li>
+    <li>PostgreSQL Database</li>
+    <li>Render.com for deployment</li>
+  </ul>
+
+  <h2>4. Implementation</h2>
+  <p>The project follows the Django MVT architecture. The system includes authentication, announcements, events, timetable, and group member modules. Each module is managed through a dynamic admin interface.</p>
+
+  <h2>5. Deployment</h2>
+  <ol>
+    <li>Configured GitHub repository.</li>
+    <li>Linked project to Render.</li>
+    <li>Set up PostgreSQL database using DATABASE_URL.</li>
+    <li>Ran migrations and deployed static files.</li>
+  </ol>
+
+  <h2>6. Challenges & Solutions</h2>
+  <ul>
+    <li><strong>Database Resets:</strong> Solved by using PostgreSQL instead of SQLite.</li>
+    <li><strong>Static File Loading:</strong> Fixed with Whitenoise integration.</li>
+    <li><strong>Matric Validation:</strong> Implemented AllowedMatric model for restricted signup.</li>
+  </ul>
+
+  <h2>7. Results</h2>
+  <p>The deployed system allows real-time access to departmental announcements, events, and timetables. Students can securely register and view group information.</p>
+
+  <h2>8. Conclusion</h2>
+  <p>The project successfully achieved its goal of providing a digital information board. It’s scalable, secure, and user-friendly.</p>
+
+  <h2>9. Recommendations</h2>
+  <ul>
+    <li>Integrate notifications (email/SMS).</li>
+    <li>Add result management functionality.</li>
+    <li>Adopt mobile app version for wider accessibility.</li>
+  </ul>
+
+  <h2>10. References</h2>
+  <ul>
+    <li>Django Documentation – https://docs.djangoproject.com</li>
+    <li>Render Docs – https://render.com/docs</li>
+    <li>W3Schools – HTML/CSS Tutorials</li>
+  </ul>
+</div>
+{% endblock %}

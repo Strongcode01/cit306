@@ -1,0 +1,84 @@
+{% extends 'core/base.html' %}
+{% block title %}Project Documentation{% endblock %}
+{% load static %}
+
+{% block extra_css %}
+<style>
+.doc-section {
+  max-width: 1000px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  font-family: "Inter", sans-serif;
+  line-height: 1.7;
+}
+.doc-section h1, .doc-section h2, .doc-section h3 {
+  color: #5a28cc;
+  margin-top: 1.2rem;
+}
+.doc-section h1 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.doc-section ul {
+  margin-left: 1.2rem;
+}
+.doc-section p {
+  margin-bottom: 1rem;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<button onclick="window.print()" style="background:#5a28cc; color:#fff; padding:8px 15px; border:none; border-radius:6px; cursor:pointer; float:right;">
+  Print Documentation
+</button>
+<section class="doc-section">
+  <h1>Project Documentation</h1>
+  <p>This section provides the technical documentation of the <strong>Departmental Student Information Board (CIT306 GP14)</strong> developed using Django.</p>
+
+  <h2>System Overview</h2>
+  <p>The project implements a departmental information board for announcements, events, timetables, and group project credentials.</p>
+
+  <h2>Architecture</h2>
+  <ul>
+    <li>Framework: Django 5.x (Python)</li>
+    <li>Frontend: HTML5, CSS3, JS</li>
+    <li>Database: PostgreSQL (Render)</li>
+    <li>Hosting: Render.com</li>
+  </ul>
+
+  <h2>Key Modules</h2>
+  <ul>
+    <li><strong>Accounts:</strong> Handles user authentication and profile management.</li>
+    <li><strong>Board:</strong> Manages announcements, events, and timetables.</li>
+    <li><strong>Team:</strong> Displays group member credentials.</li>
+    <li><strong>Core:</strong> Contains static pages like home, contact, documentation, and report.</li>
+  </ul>
+
+  <h2>Deployment Steps</h2>
+  <ol>
+    <li>Push code to GitHub.</li>
+    <li>Create a Render web service.</li>
+    <li>Add environment variables (SECRET_KEY, DATABASE_URL, DEBUG=False).</li>
+    <li>Run migrations and collect static files.</li>
+  </ol>
+
+  <h2>Security Measures</h2>
+  <ul>
+    <li>CSRF protection for all forms.</li>
+    <li>Password hashing using Django’s PBKDF2 algorithm.</li>
+    <li>Restricted signup via AllowedMatric validation.</li>
+  </ul>
+
+  <h2>Future Improvements</h2>
+  <ul>
+    <li>Integrate email notifications for announcements.</li>
+    <li>Add result management and lecturer uploads.</li>
+    <li>Implement live notifications using WebSockets.</li>
+  </ul>
+</section>
+{% endblock %}

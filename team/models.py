@@ -6,7 +6,7 @@ class TeamMember(models.Model):
     department = models.CharField(max_length=100)
     project_role = models.CharField(max_length=100)
     email = models.EmailField()
-    phone = models.CharField(max_length=50, blank=False)
+    phone = models.CharField(max_length=50, blank=True)
     github = models.URLField(blank=True)
     responsibilities = models.TextField(blank=True)
 
