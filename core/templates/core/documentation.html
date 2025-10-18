@@ -33,10 +33,11 @@
 {% endblock %}
 
 {% block content %}
-<button onclick="window.print()" style="background:#5a28cc; color:#fff; padding:8px 15px; border:none; border-radius:6px; cursor:pointer; float:right;">
-  Print Documentation
-</button>
+<div id="printable-content", class="report-container">
 <section class="doc-section">
+    <button onclick="window.print()" style="background:#5a28cc; color:#fff; padding:8px 15px; border:none; border-radius:6px; cursor:pointer; float:right;">
+        Print Report
+    </button>
   <h1>Project Documentation</h1>
   <p>This section provides the technical documentation of the <strong>Departmental Student Information Board (CIT306 GP14)</strong> developed using Django.</p>
 

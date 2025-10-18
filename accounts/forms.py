@@ -57,13 +57,13 @@ class SignupForm(UserCreationForm):
 
         if not matric:
             raise forms.ValidationError("Matric number is required.")
-        try:
-            allowed = AllowedMatric.objects.get(matric_number=matric)
-        except AllowedMatric.DoesNotExist:
-            raise forms.ValidationError("This matric number is not authorized (not found in allowlist).")
+        # try:
+        #     allowed = AllowedMatric.objects.get(matric_number=matric)
+        # except AllowedMatric.DoesNotExist:
+        #     raise forms.ValidationError("This matric number is not authorized (not found in allowlist).")
 
-        if allowed.used:
-            raise forms.ValidationError("You have already signed up with this matric number! Try login in.")
+        # if allowed.used:
+        #     raise forms.ValidationError("You have already signed up with this matric number! Try login in.")
 
         self.cleaned_data["matric_number"] = matric
         return matric

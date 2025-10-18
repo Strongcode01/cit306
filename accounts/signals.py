@@ -13,7 +13,7 @@ def manage_team_members(sender, instance, **kwargs):
             defaults={
                 "full_name": f"{instance.user.first_name} {instance.user.last_name}",
                 "department": instance.department,
-                "project_role": "Member",
+                "project_role": "Not yet Assigned a responsibilty",
                 "email": instance.user.email,
                 "phone": instance.phone,
             },
